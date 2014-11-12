@@ -4,6 +4,11 @@ Sastrawi Sentence Detector
 Sastrawi Sentence Detector adalah library PHP untuk melakukan deteksi kalimat.
 
 
+| Development | Master | Releases | Statistics |
+| ----------- | ------ | -------- | ---------- |
+| [![Build Status](https://travis-ci.org/sastrawi/sentence-detector.svg?branch=development)](https://travis-ci.org/sastrawi/sentence-detector) [![Code Coverage](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/?branch=master) | [![Build Status](https://travis-ci.org/sastrawi/sentence-detector.svg?branch=master)](https://travis-ci.org/sastrawi/sentence-detector) | [![Latest Stable Version](https://poser.pugx.org/sastrawi/sentence-detector/v/stable.png)](https://packagist.org/packages/sastrawi/sentence-detector) | [![Total Downloads](https://poser.pugx.org/sastrawi/sentence-detector/downloads.png)](https://packagist.org/packages/sastrawi/sentence-detector) |
+
+
 Sentence Detector
 -----------------
 
