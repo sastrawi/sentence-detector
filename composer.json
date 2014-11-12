@@ -1,0 +1,44 @@
+{
+    "name": "sastrawi/sentence-detector",
+    "type": "library",
+    "description": "PHP library that detects sentence in Bahasa Indonesia.",
+    "keywords": [
+        "sentence detector",
+        "sentence segmentation",
+        "text segmentation",
+        "indonesian",
+        "bahasa",
+        "indonesia"
+    ],
+    "homepage": "https://github.com/sastrawi/sentence-detector",
+    "authors": [
+        {
+            "name": "Andy Librian",
+            "email": "andylibrian@gmail.com",
+            "homepage": "http://andylibrian.pro",
+            "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "~1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Sastrawi\\SentenceDetector": "src"
+        }
+    },
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://github.com/sastrawi/sentence-detector/issues",
+        "source": "https://github.com/sastrawi/sentence-detector"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
