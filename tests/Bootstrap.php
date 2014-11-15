@@ -18,7 +18,7 @@
 
 ini_set('error_reporting', E_ALL | E_STRICT);
 
-$files = array(__DIR__ . '/../vendor/autoload.php');
+$files = array(__DIR__.'/../vendor/autoload.php');
 
 foreach ($files as $file) {
     if (file_exists($file)) {

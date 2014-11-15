@@ -16,12 +16,12 @@ Indonesia menempati posisi ke-4 negara berpenduduk terbanyak di dunia. Berdasark
 
 Dalam aktivitas sehari-hari, pengguna internet di Indonesia menggunakan Bahasa Indonesia sebagai bahasa utama. Oleh sebab itu, para _developer_ mulai membutuhkan bantuan software untuk melakukan analisa text dalam Bahasa Indonesia. Salah satu tahap analisa tersebut adalah sentence detection atau sentence segmentation, yaitu memecah text menjadi kalimat-kalimat, contohnya:
 
-    Ini ibu Budi. Ibu Budi akan pergi ke pasar.
+    Saya sedang belajar NLP Bahasa Indonesia. Saya sedang melakukan segmentasi kalimat.
 
 Text di atas terdiri dari 2 kalimat, yaitu:
 
-    - Ini ibu Budi.
-    - Ibu Budi akan pergi ke pasar.
+    - Saya sedang belajar NLP Bahasa Indonesia.
+    - Saya sedang melakukan segmentasi kalimat.
 
 
 Sastrawi Sentence Detector
@@ -30,6 +30,11 @@ Sastrawi Sentence Detector
 - _Library PHP_ untuk melakukan _sentence segmentation_ pada Bahasa Indonesia.
 - Mudah diintegrasikan dengan _framework_ / _package_ lainnya.
 - Mempunyai _API_ yang sederhana dan mudah digunakan.
+
+
+Demo
+----
+[http://sastrawi.github.io/sentence-detector.html](http://sastrawi.github.io/sentence-detector.html)
 
 
 Cara Install
@@ -55,12 +60,21 @@ Copy kode berikut di directory project anda. Lalu jalankan file tersebut.
 
 ```php
 <?php
-// demo.php
 
-// include composer autoloader
 require_once __DIR__ . '/vendor/autoload.php';
 
-// akan dilengkapi kemudian
+// create sentence detector
+$sentenceDetectorFactory = new \Sastrawi\SentenceDetector\SentenceDetectorFactory();
+$sentenceDetector = $sentenceDetectorFactory->createSentenceDetector();
+
+// detect sentence
+$text = 'Saya belajar NLP Bahasa Indonesia. Saya sedang belajar melakukan segmentasi kalimat.';
+$sentences = $sentenceDetector->detect($text);
+
+foreach ($sentences as $i => $sentence) {
+    echo "$i : $sentence<br />\n";
+}
+
 ```
 
 Lisensi

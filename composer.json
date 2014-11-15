@@ -23,7 +23,9 @@
         "php": ">=5.3"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "~1"
+        "squizlabs/php_codesniffer": "~1",
+        "behat/behat": "~3",
+        "phpunit/phpunit": "~4"
     },
     "autoload": {
         "psr-0": {
