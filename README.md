@@ -6,7 +6,7 @@ Sastrawi Sentence Detector adalah library PHP untuk melakukan deteksi kalimat.
 
 | Development | Master | Releases | Statistics |
 | ----------- | ------ | -------- | ---------- |
-| [![Build Status](https://travis-ci.org/sastrawi/sentence-detector.svg?branch=development)](https://travis-ci.org/sastrawi/sentence-detector) [![Code Coverage](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/?branch=master) | [![Build Status](https://travis-ci.org/sastrawi/sentence-detector.svg?branch=master)](https://travis-ci.org/sastrawi/sentence-detector) | [![Latest Stable Version](https://poser.pugx.org/sastrawi/sentence-detector/v/stable.png)](https://packagist.org/packages/sastrawi/sentence-detector) | [![Total Downloads](https://poser.pugx.org/sastrawi/sentence-detector/downloads.png)](https://packagist.org/packages/sastrawi/sentence-detector) |
+| [![Build Status](https://travis-ci.org/sastrawi/sentence-detector.svg?branch=development)](https://travis-ci.org/sastrawi/sentence-detector) [![Code Coverage](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/badges/coverage.png?b=development)](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/?branch=development) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/badges/quality-score.png?b=development)](https://scrutinizer-ci.com/g/sastrawi/sentence-detector/?branch=development) | [![Build Status](https://travis-ci.org/sastrawi/sentence-detector.svg?branch=master)](https://travis-ci.org/sastrawi/sentence-detector) | [![Latest Stable Version](https://poser.pugx.org/sastrawi/sentence-detector/v/stable.png)](https://packagist.org/packages/sastrawi/sentence-detector) | [![Total Downloads](https://poser.pugx.org/sastrawi/sentence-detector/downloads.png)](https://packagist.org/packages/sastrawi/sentence-detector) |
 
 
 Sentence Detector
@@ -22,6 +22,15 @@ Text di atas terdiri dari 2 kalimat, yaitu:
 
     - Saya sedang belajar NLP Bahasa Indonesia.
     - Saya sedang melakukan segmentasi kalimat.
+
+Masih terlihat sederhana, sampai muncul kalimat-kalimat berikut:
+
+    Saya belajar NLP di Jl. Prof. Dr. Soepomo SH no. 11. Kapan saya harus ke sana?
+
+Text di atas terdiri dari 2 kalimat, yaitu:
+
+    - Saya belajar NLP di Jl. Prof. Dr. Soepomo SH no. 11.
+    - Kapan saya harus ke sana?
 
 
 Sastrawi Sentence Detector

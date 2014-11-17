@@ -28,6 +28,14 @@ class SentenceDetectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Span(35, 66), $spans[1]);
     }
 
+    public function testDetectPositionsWhenTheTextContainsNoEndOfSentence()
+    {
+        $spans = $this->sd->detectPositions('Saya belajar NLP Bahasa Indonesia');
+
+        $this->assertCount(1, $spans);
+        $this->assertEquals(new Span(0, 33), $spans[0]);
+    }
+
     public function testDetectReturnArrayOfString()
     {
         $s = $this->sd->detect('Saya belajar NLP Bahasa Indonesia. Saya sedang segmentasi kalimat.');
