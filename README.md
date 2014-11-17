@@ -81,6 +81,7 @@ Lisensi
 --------
 
 Sastrawi Sentence Detector dirilis di bawah lisensi MIT License (MIT).
+Library ini memuat daftar singkatan Bahasa Indonesia dengan lisensi [Creative Common BY SA](https://creativecommons.org/licenses/by-sa/3.0/deed.id) yang bersumber dari [http://id.wiktionary.org/wiki/Wiktionary:Daftar_singkatan_dan_akronim_bahasa_Indonesia](http://id.wiktionary.org/wiki/Wiktionary:Daftar_singkatan_dan_akronim_bahasa_Indonesia).
 
 
 Informasi Lebih Lanjut

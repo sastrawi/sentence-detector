@@ -5,7 +5,7 @@ namespace Sastrawi\SentenceDetector;
 use Sastrawi\SentenceDetector\Util\StringUtil;
 use Sastrawi\SentenceDetector\Util\Span;
 
-class SentenceDetector
+class SentenceDetector implements SentenceDetectorInterface
 {
     private $eosScanner;
 
