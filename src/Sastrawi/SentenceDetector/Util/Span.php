@@ -8,6 +8,11 @@
 
 namespace Sastrawi\SentenceDetector\Util;
 
+/**
+ * Text span model
+ *
+ * @author Andy Librian
+ */
 class Span
 {
     private $start = 0;
@@ -37,26 +42,52 @@ class Span
         $this->type  = $type;
     }
 
+    /**
+     * Get the start position.
+     *
+     * @return int
+     */
     public function getStart()
     {
         return $this->start;
     }
 
+    /**
+     * Get the end position.
+     *
+     * @return int
+     */
     public function getEnd()
     {
         return $this->end;
     }
 
+    /**
+     * Get type of the span.
+     *
+     * @return string
+     */
     public function getType()
     {
         return $this->type;
     }
 
+    /**
+     * Get the span length
+     *
+     * @return int
+     */
     public function getLength()
     {
         return $this->end - $this->start;
     }
 
+    /**
+     * Get covered text by this span.
+     *
+     * @param  string $text The text
+     * @return string
+     */
     public function getCoveredText($text)
     {
         return substr($text, $this->start, $this->getLength());

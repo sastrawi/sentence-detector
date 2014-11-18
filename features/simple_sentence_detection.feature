@@ -12,6 +12,17 @@ Feature: Sentence Detection
       Ini kalimat pertama.
       Ini kalimat kedua.
       """
+  Scenario: Detect simple sentence 2
+    Given The following text:
+      """
+      Ini kalimat pertama.Ini kalimat kedua.
+      """
+    When I detect its sentences
+    Then I should get the following sentences:
+      """
+      Ini kalimat pertama.
+      Ini kalimat kedua.
+      """
 
   Scenario: The first sentence begins with the first non whitespace character of the text
     Given The following text:
@@ -60,7 +71,7 @@ Feature: Sentence Detection
       Ini kalimat pertama
       """
 
-  Scenario: The sentence does not contain any sentence end characters
+  Scenario: The sentence contains whitespaces
     Given The following text:
       """
         Ini kalimat pertama.   Ini kalimat kedua.      

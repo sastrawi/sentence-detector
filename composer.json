@@ -8,7 +8,9 @@
         "text segmentation",
         "indonesian",
         "bahasa",
-        "indonesia"
+        "indonesia",
+        "nlp",
+        "natural language processing"
     ],
     "homepage": "https://github.com/sastrawi/sentence-detector",
     "authors": [

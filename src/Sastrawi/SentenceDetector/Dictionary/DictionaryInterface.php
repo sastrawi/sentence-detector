@@ -11,7 +11,7 @@ namespace Sastrawi\SentenceDetector\Dictionary;
 /**
  * The Dictionary interface used by sentence detector.
  *
- * @author Andy Librian <andylibrian@gmail.com>
+ * @author Andy Librian
  */
 interface DictionaryInterface extends \Countable
 {

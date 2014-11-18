@@ -4,6 +4,8 @@ namespace SastrawiTest\SentenceDetector;
 
 use Sastrawi\SentenceDetector\SentenceDetector;
 use Sastrawi\SentenceDetector\Util\Span;
+use Sastrawi\SentenceDetector\EndOfSentenceScanner;
+use Sastrawi\SentenceDetector\Dictionary\ArrayDictionary;
 
 class SentenceDetectorTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,7 +13,9 @@ class SentenceDetectorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->sd = new SentenceDetector();
+        $eosScanner = new EndOfSentenceScanner();
+        $abbreviationDictionary = new ArrayDictionary();
+        $this->sd = new SentenceDetector($eosScanner, $abbreviationDictionary);
     }
 
     public function testImplementsProperInterface()

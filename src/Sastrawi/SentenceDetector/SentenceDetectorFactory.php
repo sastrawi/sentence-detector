@@ -8,11 +8,26 @@
 
 namespace Sastrawi\SentenceDetector;
 
+/**
+ * Sentence Detector Factory
+ *
+ * @author Andy Librian
+ */
 class SentenceDetectorFactory
 {
+    /**
+     * Create a ready-to-use sentence detector instance.
+     *
+     * @return \Sastrawi\SentenceDetector\SentenceDetector
+     */
     public function createSentenceDetector()
     {
-        $sentenceDetector = new SentenceDetector();
+        $eosScanner = new EndOfSentenceScanner();
+
+        $abbrs = file(__DIR__.'/../../../data/abbreviations.txt', FILE_IGNORE_NEW_LINES);
+        $dictionary = new Dictionary\ArrayDictionary($abbrs);
+
+        $sentenceDetector = new SentenceDetector($eosScanner, $dictionary);
 
         return $sentenceDetector;
     }

@@ -8,15 +8,29 @@
 
 namespace Sastrawi\SentenceDetector;
 
+/**
+ * End of Sentence Scanner.
+ *
+ * @author Andy Librian
+ */
 class EndOfSentenceScanner implements EndOfSentenceScannerInterface
 {
+    /**
+     * @var string[]
+     */
     private $eosChars;
 
+    /**
+     * Constructor
+     */
     public function __construct(array $eosChars = array('.', '?', '!'))
     {
         $this->eosChars = $eosChars;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getPositions($string)
     {
         $string    = (string) $string;
@@ -31,6 +45,9 @@ class EndOfSentenceScanner implements EndOfSentenceScannerInterface
         return $positions;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getEndOfSentenceCharacters()
     {
         return $this->eosChars;

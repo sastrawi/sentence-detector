@@ -10,6 +10,8 @@ namespace Sastrawi\SentenceDetector\Dictionary;
 
 /**
  * Implementation of the DictionaryInterface using Array
+ *
+ * @author Andy Librian
  */
 class ArrayDictionary implements DictionaryInterface
 {

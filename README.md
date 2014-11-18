@@ -39,6 +39,7 @@ Sastrawi Sentence Detector
 - _Library PHP_ untuk melakukan _sentence segmentation_ pada Bahasa Indonesia.
 - Mudah diintegrasikan dengan _framework_ / _package_ lainnya.
 - Mempunyai _API_ yang sederhana dan mudah digunakan.
+- Terinspirasi oleh Apache OpenNLP.
 
 
 Demo

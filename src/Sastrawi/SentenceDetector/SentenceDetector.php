@@ -10,20 +10,43 @@ namespace Sastrawi\SentenceDetector;
 
 use Sastrawi\SentenceDetector\Util\StringUtil;
 use Sastrawi\SentenceDetector\Util\Span;
+use Sastrawi\SentenceDetector\Dictionary\DictionaryInterface;
 
+/**
+ * Sentence Detector for Bahasa Indonesia.
+ *
+ * @author Andy Librian
+ */
 class SentenceDetector implements SentenceDetectorInterface
 {
+    /**
+     * End of sentence scanner.
+     *
+     * @var \Sastrawi\SentenceDetector\EndOfSentenceScannerInterface
+     */
     private $eosScanner;
 
+    /**
+     * Abbreviation Dictionary.
+     *
+     * @var \Sastrawi\SentenceDetector\Dictionary\DictionaryInterface
+     */
     private $abbreviationDictionary;
 
-    public function __construct()
-    {
-        $this->eosScanner = new EndOfSentenceScanner();
-        $abbrs = file(__DIR__.'/../../../data/abbreviations.txt', FILE_IGNORE_NEW_LINES);
-        $this->abbreviationDictionary = new Dictionary\ArrayDictionary($abbrs);
+    /**
+     * Constructor.
+     */
+    public function __construct(
+        EndOfSentenceScannerInterface $eosScanner,
+        DictionaryInterface $abbreviationDictionary
+    ) {
+        $this->eosScanner = $eosScanner;
+        $this->abbreviationDictionary = $abbreviationDictionary;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function detect($text)
     {
         $spans = $this->detectPositions($text);
@@ -36,6 +59,9 @@ class SentenceDetector implements SentenceDetectorInterface
         return $sentences;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function detectPositions($text)
     {
         $positions = $this->detectEosCandidates($text);
@@ -43,11 +69,11 @@ class SentenceDetector implements SentenceDetectorInterface
 
         // string does not contain any sentence end positions
         if (count($positions) == 0) {
-            $start = $this->getFirstNonWhitespace($text, 0);
-            $end   = $this->getFirstNonWhitespace($text, strlen($text), -1);
+            $start = StringUtil::getNextNonWhitespace($text);
+            $end   = StringUtil::getPrevNonWhitespace($text);
 
             if (($end - $start) > 0) {
-                $spans[] = new Span($start, $end);
+                $spans[] = new Span($start, $end + 1);
             }
 
             return $spans;
@@ -58,24 +84,38 @@ class SentenceDetector implements SentenceDetectorInterface
         foreach ($positions as $i => $pos) {
             // first sentence starts from 0, else starts from $pos[$i-1] + 1
             if ($i == 0) {
-                $start = $this->getFirstNonWhitespace($text, 0);
+                $start = StringUtil::getNextNonWhitespace($text);
             } else {
-                $start = $this->getFirstNonWhitespace($text, $positions[$i - 1] + 1);
+                // start from previous eos position + 1
+                $start = $positions[$i - 1] + 1;
+
+                // ignore closing quote if exist
+                if (substr($text, $positions[$i - 1] + 1, 1) === '"') {
+                    $start++;
+                }
+
+                $start = StringUtil::getNextNonWhitespace($text, $start - 1);
             }
 
-            $end = $this->getFirstNonWhitespace($text, $pos, -1);
+            $end = StringUtil::getPrevNonWhitespace($text, $pos);
             $end++;
+            // include closing quote if exist
+            if ($end < strlen($text) - 1) {
+                if (substr($text, $end + 1, 1) === '"') {
+                    $end++;
+                }
+            }
 
-            $spans[] = new Span($start, $end);
+            $spans[] = new Span($start, $end + 1);
         }
 
         // leftover
-        if ($positions[count($positions) - 1] != strlen($text)) {
-            $start = $this->getFirstNonWhitespace($text, $positions[count($positions) - 1] + 1);
-            $end   = $this->getFirstNonWhitespace($text, strlen($text), -1);
+        if ($positions[count($positions) - 1] != strlen($text) - 1) {
+            $start = StringUtil::getNextNonWhitespace($text, $positions[count($positions) - 1]);
+            $end   = StringUtil::getPrevNonWhitespace($text);
 
-            if (($end - $start) > 0) {
-                $spans[] = new Span($start, $end);
+            if ($start !== false && ($end - $start) > 0) {
+                $spans[] = new Span($start, $end + 1);
             }
         }
 
@@ -120,21 +160,48 @@ class SentenceDetector implements SentenceDetectorInterface
             }
         }
 
-        return true;
-    }
+        if ($position < strlen($text) - 1) {
+            // detect wether preceding token is part of an abbreviation
+            // for example: a.n., e.g., i.e., a.m.v.b.
+            $nextWs = StringUtil::getNextWhitespace($text, $position);
+            $prevWs = StringUtil::getPrevWhitespace($text, $position);
 
-    private function getFirstNonWhitespace($string, $start, $direction = 1)
-    {
-        if ($direction > 0) {
-            while ($start < strlen($string) && StringUtil::isWhitespace($string[$start])) {
-                $start++;
-            }
-        } else {
-            while ($start > 0 && StringUtil::isWhitespace($string[$start - 1])) {
-                $start--;
+            $tokenStart = $prevWs + 1;
+            $tokenEnd   = $nextWs - 1;
+
+            $token  = substr($text, $tokenStart, $tokenEnd - $tokenStart);
+
+            if ($token !== '' && strpos($token, '.') !== false) {
+                if ($this->abbreviationDictionary->contains(strtolower($token))) {
+                    return false;
+                }
             }
         }
 
-        return $start;
+        // check thousand / digit separator
+        if ($position != 0 && $position < strlen($text) - 1) {
+            $prevChar = substr($text, $position - 1, 1);
+            $nextChar = substr($text, $position + 1, 1);
+
+            if (is_numeric($prevChar) && is_numeric($nextChar)) {
+                return false;
+            }
+        }
+
+        // detect email address, exclude last .
+        if ($position < (strlen($text) - 1) && !StringUtil::isWhitespace(substr($text, $position + 1, 1))) {
+            $nextWs = StringUtil::getNextWhitespace($text, $position);
+            $prevWs = StringUtil::getPrevWhitespace($text, $position);
+
+            $tokenStart = $prevWs + 1;
+            $tokenEnd   = $nextWs - 1;
+
+            $token  = substr($text, $tokenStart, $tokenEnd - $tokenStart);
+            if ($token !== '' && filter_var($token, FILTER_VALIDATE_EMAIL)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

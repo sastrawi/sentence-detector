@@ -8,9 +8,28 @@
 
 namespace Sastrawi\SentenceDetector;
 
+/**
+ * End of sentence scanner interface.
+ *
+ * @author Andy Librian
+ */
 interface EndOfSentenceScannerInterface
 {
+    /**
+     * Retrieve end of sentence characters.
+     *
+     * @return array
+     *
+     * @api
+     */
     public function getEndOfSentenceCharacters();
 
+    /**
+     * Get the positions of each of detected end of sentence characters.
+     *
+     * @return array
+     *
+     * @api
+     */
     public function getPositions($string);
 }
