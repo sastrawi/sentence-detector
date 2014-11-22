@@ -53,7 +53,7 @@ class SentenceDetector implements SentenceDetectorInterface
      */
     public function detectPositions($text)
     {
-        $positions = $this->detectEosCandidates($text);
+        $positions = $this->eosScanner->getPositions($text);
         $spans     = array();
 
         // string does not contain any sentence end positions
@@ -103,21 +103,23 @@ class SentenceDetector implements SentenceDetectorInterface
             $spans[] = new Span($start, $end + 1);
         }
 
-        // leftover
-        if ($positions[count($positions) - 1] != strlen($text) - 1) {
-            $start = StringUtil::getNextNonWhitespace($text, $positions[count($positions) - 1]);
-            $end   = StringUtil::getPrevNonWhitespace($text);
-
-            if ($start !== false && ($end - $start) > 0) {
-                $spans[] = new Span($start, $end + 1);
-            }
+        $leftover = $this->getLeftoverSpan($text, $positions);
+        if ($leftover !== null) {
+            $spans[] = $leftover;
         }
 
         return $spans;
     }
 
-    private function detectEosCandidates($text)
+    private function getLeftoverSpan($text, array $positions)
     {
-        return $this->eosScanner->getPositions($text);
+        if ($positions[count($positions) - 1] != strlen($text) - 1) {
+            $start = StringUtil::getNextNonWhitespace($text, $positions[count($positions) - 1]);
+            $end   = StringUtil::getPrevNonWhitespace($text);
+
+            if ($start !== false && ($end - $start) > 0) {
+                return new Span($start, $end + 1);
+            }
+        }
     }
 }

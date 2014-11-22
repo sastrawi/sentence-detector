@@ -40,6 +40,11 @@ class FuzzyEndOfSentenceScanner implements EndOfSentenceScannerInterface
         $this->addEosAnalyzers($eosAnalyzers);
     }
 
+    /**
+     * Add analyzers
+     *
+     * @param \Sastrawi\SentenceDetector\EosAnalyzer\AnalyzerInterface[]
+     */
     public function addEosAnalyzers(array $eosAnalyzers)
     {
         foreach ($eosAnalyzers as $analyzer) {
@@ -47,11 +52,21 @@ class FuzzyEndOfSentenceScanner implements EndOfSentenceScannerInterface
         }
     }
 
+    /**
+     * Add analyzer
+     *
+     * @param \Sastrawi\SentenceDetector\EosAnalyzer\AnalyzerInterface
+     */
     public function addEosAnalyzer(EosAnalyzer\AnalyzerInterface $analyzer)
     {
         $this->eosAnalyzers[] = $analyzer;
     }
 
+    /**
+     * Get registered analyzers
+     *
+     * @return \Sastrawi\SentenceDetector\EosAnalyzer\AnalyzerInterface[]
+     */
     public function getEosAnalyzers()
     {
         return $this->eosAnalyzers;

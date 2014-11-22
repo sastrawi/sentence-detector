@@ -46,4 +46,24 @@ class SentenceDetectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Saya belajar NLP Bahasa Indonesia.', $s[0]);
         $this->assertEquals('Saya sedang segmentasi kalimat.', $s[1]);
     }
+
+    public function testDetectReturnArrayOfStringLeftover()
+    {
+        $s = $this->sd->detect('Saya belajar NLP Bahasa Indonesia. Saya sedang segmentasi kalimat. Hmm');
+
+        $this->assertCount(3, $s);
+        $this->assertEquals('Saya belajar NLP Bahasa Indonesia.', $s[0]);
+        $this->assertEquals('Saya sedang segmentasi kalimat.', $s[1]);
+        $this->assertEquals('Hmm', $s[2]);
+    }
+
+    public function testDetectReturnArrayOfStringWithQuote()
+    {
+        $s = $this->sd->detect('Saya belajar NLP Bahasa Indonesia. "Saya sedang segmentasi kalimat.", kata Budi.');
+
+        $this->assertCount(3, $s);
+        $this->assertEquals('Saya belajar NLP Bahasa Indonesia.', $s[0]);
+        $this->assertEquals('"Saya sedang segmentasi kalimat."', $s[1]);
+        $this->assertEquals(', kata Budi.', $s[2]);
+    }
 }
