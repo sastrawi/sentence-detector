@@ -83,3 +83,15 @@ Feature: Sentence Detection
       Ini kalimat kedua.
       """
 
+  Scenario: The sentence contain repetitive end of sentence character
+    Given The following text:
+      """
+      Segmentasi kalimat.. NLP Bahasa Indonesia.
+      """
+    When I detect its sentences
+    Then I should get the following sentences:
+      """
+      Segmentasi kalimat..
+      NLP Bahasa Indonesia.
+      """
+

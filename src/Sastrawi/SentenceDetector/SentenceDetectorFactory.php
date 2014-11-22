@@ -25,7 +25,9 @@ class SentenceDetectorFactory
         $abbrs = file(__DIR__.'/../../../data/abbreviations.txt', FILE_IGNORE_NEW_LINES);
         $dictionary = new Dictionary\ArrayDictionary($abbrs);
 
-        $eosScanner = new FuzzyEndOfSentenceScanner($dictionary);
+        $eosScanner = new FuzzyEndOfSentenceScanner();
+        $eosScanner->addEosAnalyzer(new EosAnalyzer\Abbreviation($dictionary));
+
         $sentenceDetector = new SentenceDetector($eosScanner);
 
         return $sentenceDetector;
