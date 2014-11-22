@@ -33,30 +33,17 @@ class Abbreviation implements AnalyzerInterface
         $text     = $model->getText();
         $position = $model->getPosition();
 
+        // detect wether preceding token is an abbreviation
         if ($position != 0) {
-            // detect wether preceding token is an abbreviation
-            $start = $model->getPosition();
-            while ($start > 0 && !StringUtil::isWhitespace($text[$start - 1])) {
-                $start--;
-            }
-
-            $precedingToken = substr($model->getText(), $start, $position - $start);
-
-            if ($this->abbreviationDictionary->contains(strtolower($precedingToken))) {
+            if ($this->abbreviationDictionary->contains(strtolower($this->getPrecedingToken($text, $position)))) {
                 return false;
             }
         }
 
+        // detect wether preceding token is part of an abbreviation
+        // for example: a.n., e.g., i.e., a.m.v.b.
         if ($position < strlen($text) - 1) {
-            // detect wether preceding token is part of an abbreviation
-            // for example: a.n., e.g., i.e., a.m.v.b.
-            $nextWs = StringUtil::getNextWhitespace($text, $position);
-            $prevWs = StringUtil::getPrevWhitespace($text, $position);
-
-            $tokenStart = ($prevWs === false) ? 0 : $prevWs + 1;
-            $tokenEnd   = (($nextWs === false) ? strlen($text) : $nextWs) - 1;
-
-            $token  = substr($text, $tokenStart, $tokenEnd - $tokenStart);
+            $token = $this->getToken($text, $position);
 
             if ($token !== '' && strpos($token, '.') !== false) {
                 if ($this->abbreviationDictionary->contains(strtolower($token))) {
@@ -66,5 +53,34 @@ class Abbreviation implements AnalyzerInterface
         }
 
         return true;
+    }
+
+    private function getPrecedingToken($text, $position)
+    {
+        $start = $position;
+        while ($start > 0 && !StringUtil::isWhitespace($text[$start - 1])) {
+            $start--;
+        }
+
+        $precedingToken = substr($text, $start, $position - $start);
+
+        return $precedingToken;
+    }
+
+    private function getToken($text, $position)
+    {
+        if ($position >= strlen($text) - 1) {
+            return '';
+        }
+
+        $nextWs = StringUtil::getNextWhitespace($text, $position);
+        $prevWs = StringUtil::getPrevWhitespace($text, $position);
+
+        $tokenStart = ($prevWs === false) ? 0 : $prevWs + 1;
+        $tokenEnd   = (($nextWs === false) ? strlen($text) : $nextWs) - 1;
+
+        $token  = substr($text, $tokenStart, $tokenEnd - $tokenStart);
+
+        return $token;
     }
 }

@@ -22,9 +22,16 @@ class EmailAddress implements AnalyzerInterface
      */
     public function shouldSplit(Model $model)
     {
-        $position = $model->getPosition();
-        $text     = $model->getText();
+        $token    = $this->getToken($model->getText(), $model->getPosition());
+        if ($token !== '' && filter_var($token, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
 
+        return true;
+    }
+
+    private function getToken($text, $position)
+    {
         if ($position < (strlen($text) - 1) && !StringUtil::isWhitespace(substr($text, $position + 1, 1))) {
             $nextWs = StringUtil::getNextWhitespace($text, $position);
             $prevWs = StringUtil::getPrevWhitespace($text, $position);
@@ -32,12 +39,11 @@ class EmailAddress implements AnalyzerInterface
             $tokenStart = ($prevWs === false) ? 0 : $prevWs + 1;
             $tokenEnd   = (($nextWs === false) ? strlen($text) : $nextWs) - 1;
 
-            $token  = substr($text, $tokenStart, $tokenEnd - $tokenStart);
-            if ($token !== '' && filter_var($token, FILTER_VALIDATE_EMAIL)) {
-                return false;
-            }
-        }
+            $token = substr($text, $tokenStart, $tokenEnd - $tokenStart);
 
-        return true;
+            return $token;
+        } else {
+            return '';
+        }
     }
 }
