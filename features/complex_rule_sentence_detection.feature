@@ -64,3 +64,26 @@ Feature: Sentence Detection
       Dia senang sekali.
       """
 
+  Scenario: Detect email address 2
+    Given The following text:
+      """
+      Dia dipanggil untuk interview. Dia mengirim email ke andylibrian@gmail.com.
+      """
+    When I detect its sentences
+    Then I should get the following sentences:
+      """
+      Dia dipanggil untuk interview.
+      Dia mengirim email ke andylibrian@gmail.com.
+      """
+  Scenario: Detect email address 3
+    Given The following text:
+      """
+      a@gmail.com adalah email yang aneh. Siapa yang membuat email seperti itu?
+      """
+    When I detect its sentences
+    Then I should get the following sentences:
+      """
+      a@gmail.com adalah email yang aneh.
+      Siapa yang membuat email seperti itu?
+      """
+
