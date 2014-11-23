@@ -57,7 +57,7 @@ Sastrawi Sentence Detector dapat diinstall dengan [Composer](https://getcomposer
 3. Tambahkan Sastrawi Sentence Detector ke file `composer.json` Anda :
 
 ```bash
-php composer.phar require sastrawi/sentence-detector:dev-master
+php composer.phar require sastrawi/sentence-detector:~1
 ```
 
 Jika Anda masih belum memahami bagaimana cara menggunakan Composer, silahkan baca [Getting Started with Composer](https://getcomposer.org/doc/00-intro.md).
