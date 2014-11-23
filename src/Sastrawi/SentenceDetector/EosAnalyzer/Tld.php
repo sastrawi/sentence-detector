@@ -70,8 +70,9 @@ class Tld implements AnalyzerInterface
             return false;
         }
 
+        $path = $urlParts['path'];
         foreach ($this->tlds as $tld) {
-            if (preg_match("/\\$tld$/", $urlParts['path'])) {
+            if (preg_match("/\\$tld$/", $path) || preg_match("/\\$tld([\\/\\#\\.])/", $path)) {
                 return true;
             }
         }

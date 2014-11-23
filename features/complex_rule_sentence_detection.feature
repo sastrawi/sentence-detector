@@ -100,3 +100,15 @@ Feature: Sentence Detection
       Dia menemukan halaman demo.
       """
 
+  Scenario: Detect top level domain 2
+    Given The following text:
+      """
+      Budi mengakses github.com/sentence-detector. Dia menemukan repository.
+      """
+    When I detect its sentences
+    Then I should get the following sentences:
+      """
+      Budi mengakses github.com/sentence-detector.
+      Dia menemukan repository.
+      """
+
