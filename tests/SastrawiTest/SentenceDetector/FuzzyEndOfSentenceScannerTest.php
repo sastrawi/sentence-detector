@@ -5,6 +5,7 @@ namespace SastrawiTest\SentenceDetector;
 use Sastrawi\SentenceDetector\FuzzyEndOfSentenceScanner;
 use Sastrawi\SentenceDetector\EndOfSentenceScannerInterface;
 use Sastrawi\SentenceDetector\EosAnalyzer\Abbreviation;
+use Sastrawi\SentenceDetector\EosAnalyzer\Tld;
 use Sastrawi\SentenceDetector\Dictionary\ArrayDictionary;
 
 class FuzzyEndOfSentenceScannerTest extends \PHPUnit_Framework_TestCase
@@ -68,5 +69,15 @@ class FuzzyEndOfSentenceScannerTest extends \PHPUnit_Framework_TestCase
         $eosPositions = $this->scanner->getPositions('Jl. Hayam Wuruk.');
 
         $this->assertEquals(15, $eosPositions[0]);
+    }
+
+    public function testGetPositionTld()
+    {
+        $tldAnalyzer = new Tld(array('.io'));
+
+        $this->scanner->addEosAnalyzer($tldAnalyzer);
+        $eosPositions = $this->scanner->getPositions('sastrawi.github.io.');
+
+        $this->assertEquals(18, $eosPositions[0]);
     }
 }

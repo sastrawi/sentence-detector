@@ -11,16 +11,19 @@ namespace Sastrawi\SentenceDetector\EosAnalyzer;
 use Sastrawi\SentenceDetector\Util\StringUtil;
 
 /**
- * Email Address Analyzer
+ * Analyze wether an end of sentence character is a part of TLD (Top Level Domain)
  *
  * @author Andy Librian
  */
-class EmailAddress implements AnalyzerInterface
+class Tld implements AnalyzerInterface
 {
+    private $tlds = array();
+
     private $eosChars;
 
-    public function __construct()
+    public function __construct(array $tlds = array())
     {
+        $this->tlds = $tlds;
         $this->eosChars = StringUtil::getStandardEosChars();
     }
 
@@ -30,7 +33,7 @@ class EmailAddress implements AnalyzerInterface
     public function shouldSplit(Model $model)
     {
         $token    = $this->getToken($model->getText(), $model->getPosition());
-        if ($token !== '' && filter_var($token, FILTER_VALIDATE_EMAIL)) {
+        if ($token !== '' && $this->isValidTld($token)) {
             return false;
         }
 
@@ -57,5 +60,22 @@ class EmailAddress implements AnalyzerInterface
         } else {
             return '';
         }
+    }
+
+    private function isValidTld($string)
+    {
+        $urlParts = parse_url($string);
+
+        if (empty($urlParts)) {
+            return false;
+        }
+
+        foreach ($this->tlds as $tld) {
+            if (preg_match("/\\$tld$/", $urlParts['path'])) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

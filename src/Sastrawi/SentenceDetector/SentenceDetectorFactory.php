@@ -22,11 +22,16 @@ class SentenceDetectorFactory
      */
     public function createSentenceDetector()
     {
-        $abbrs = file(__DIR__.'/../../../data/abbreviations.txt', FILE_IGNORE_NEW_LINES);
-        $dictionary = new Dictionary\ArrayDictionary($abbrs);
-
         $eosScanner = new FuzzyEndOfSentenceScanner();
-        $eosScanner->addEosAnalyzer(new EosAnalyzer\Abbreviation($dictionary));
+
+        // abbreviation analyzer
+        $abbrs = file(__DIR__.'/../../../data/abbreviations.txt', FILE_IGNORE_NEW_LINES);
+        $abbreviationDictionary = new Dictionary\ArrayDictionary($abbrs);
+        $eosScanner->addEosAnalyzer(new EosAnalyzer\Abbreviation($abbreviationDictionary));
+
+        // TLD (Top Level Domain) analyzer
+        $tlds = file(__DIR__.'/../../../data/tld.txt', FILE_IGNORE_NEW_LINES);
+        $eosScanner->addEosAnalyzer(new EosAnalyzer\Tld($tlds));
 
         $sentenceDetector = new SentenceDetector($eosScanner);
 

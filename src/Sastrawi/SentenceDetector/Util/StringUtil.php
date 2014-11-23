@@ -17,6 +17,8 @@ class StringUtil
 {
     private static $whitespaceChars = array(' ', "\t", "\n");
 
+    private static $standardEosChars = array('.', '?', '!');
+
     /**
      * Determine wether a character is a whitespace or not.
      *
@@ -118,5 +120,10 @@ class StringUtil
         $start--;
 
         return $start;
+    }
+
+    public static function getStandardEosChars()
+    {
+        return self::$standardEosChars;
     }
 }

@@ -75,6 +75,7 @@ Feature: Sentence Detection
       Dia dipanggil untuk interview.
       Dia mengirim email ke andylibrian@gmail.com.
       """
+
   Scenario: Detect email address 3
     Given The following text:
       """
@@ -85,5 +86,17 @@ Feature: Sentence Detection
       """
       a@gmail.com adalah email yang aneh.
       Siapa yang membuat email seperti itu?
+      """
+  
+  Scenario: Detect top level domain
+    Given The following text:
+      """
+      Budi mengakses sastrawi.github.io. Dia menemukan halaman demo.
+      """
+    When I detect its sentences
+    Then I should get the following sentences:
+      """
+      Budi mengakses sastrawi.github.io.
+      Dia menemukan halaman demo.
       """
 
