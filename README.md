@@ -71,6 +71,9 @@ Copy kode berikut di directory project anda. Lalu jalankan file tersebut.
 ```php
 <?php
 
+// demo.php
+
+// include composer autoloader
 require_once __DIR__ . '/vendor/autoload.php';
 
 // create sentence detector
