@@ -39,11 +39,11 @@ class FuzzyEndOfSentenceScannerTest extends \PHPUnit_Framework_TestCase
 
     public function testAddGetEosAnalyzers()
     {
-        $this->assertCount(4, $this->scanner->getEosAnalyzers());
+        $this->assertCount(7, $this->scanner->getEosAnalyzers());
 
         $mock = $this->getMock('Sastrawi\SentenceDetector\EosAnalyzer\AnalyzerInterface');
         $this->scanner->addEosAnalyzers(array($mock));
-        $this->assertCount(5, $this->scanner->getEosAnalyzers());
+        $this->assertCount(8, $this->scanner->getEosAnalyzers());
     }
 
     public function testGetPositionsNumeric()

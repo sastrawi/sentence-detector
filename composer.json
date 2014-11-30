@@ -22,13 +22,16 @@
         }
     ],
     "require": {
-        "php": ">=5.3"
+        "php": ">=5.3",
+        "sastrawi/string-span": "~1",
+        "sastrawi/trka": "~0.1"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~1",
         "behat/behat": "~3",
         "phpunit/phpunit": "~4"
     },
+    "prefer-stable": true,
     "autoload": {
         "psr-0": {
             "Sastrawi\\SentenceDetector": "src"

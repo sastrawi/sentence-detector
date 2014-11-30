@@ -34,8 +34,11 @@ class FuzzyEndOfSentenceScanner implements EndOfSentenceScannerInterface
 
         $this->addEosAnalyzer(new EosAnalyzer\RepetitiveEos());
         $this->addEosAnalyzer(new EosAnalyzer\LeadingEos());
-        $this->addEosAnalyzer(new EosAnalyzer\NumericSeparator());
-        $this->addEosAnalyzer(new EosAnalyzer\EmailAddress());
+        $this->addEosAnalyzer(new EosAnalyzer\TrkaNumericSeparator());
+        $this->addEosAnalyzer(new EosAnalyzer\TrkaEmailAddress());
+        $this->addEosAnalyzer(new EosAnalyzer\TrkaAbbreviation());
+        $this->addEosAnalyzer(new EosAnalyzer\TrkaHostname());
+        $this->addEosAnalyzer(new EosAnalyzer\TrkaUrl());
 
         $this->addEosAnalyzers($eosAnalyzers);
     }

@@ -1,10 +1,8 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use Sastrawi\SentenceDetector\SentenceDetectorFactory;
 
 /**
@@ -13,11 +11,11 @@ use Sastrawi\SentenceDetector\SentenceDetectorFactory;
 class FeatureContext implements Context, SnippetAcceptingContext
 {
     private $text;
-    
+
     private $sentenceDetector;
-    
+
     private $sentences = array();
-    
+
     /**
      * Initializes context.
      *
@@ -36,7 +34,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function theFollowingText(PyStringNode $string)
     {
-        $this->text = (string)$string;
+        $this->text = (string) $string;
     }
 
     /**
@@ -52,7 +50,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iShouldGetTheFollowingSentences(PyStringNode $string)
     {
-        $text = (string)$string;
+        $text = (string) $string;
         $sentences = explode("\n", $text);
 
         \PHPUnit_Framework_Assert::assertEquals($sentences, $this->sentences);
